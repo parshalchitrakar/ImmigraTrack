@@ -16,9 +16,7 @@ import { startCronJobs } from './jobs/scheduledTasks';
 const app = express();
 
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? ['https://immigra-track.vercel.app', 'https://immigra-track-git-main-parshalchitrakars-projects.vercel.app'] 
-    : 'http://localhost:4200',
+  origin: process.env.NODE_ENV === 'production' ? '*' : 'http://localhost:4200',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
