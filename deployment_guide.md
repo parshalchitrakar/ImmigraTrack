@@ -30,6 +30,7 @@ This guide is tailored for your choice of **Neon.tech** (Database), **Vercel** (
 5. **Environment Variables**:
    - `DATABASE_URL`: (Paste your Neon connection string here)
    - `NODE_ENV`: `production`
+   - `NPM_CONFIG_PRODUCTION`: `false` (CRITICAL: This ensures TypeScript types are installed for the build)
 6. Click **Create Web Service**.
 
 ---

@@ -8,7 +8,7 @@ const poolConfig = config.db.connectionString
 export const pool = new Pool(poolConfig);
 
 
-pool.on('error', (err, client) => {
+pool.on('error', (err: Error, client) => {
   console.error('Unexpected error on idle client', err);
   process.exit(-1);
 });
