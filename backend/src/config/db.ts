@@ -3,7 +3,15 @@ import { config } from './env';
 
 const poolConfig = config.db.connectionString 
   ? { connectionString: config.db.connectionString, ssl: config.env === 'production' ? { rejectUnauthorized: false } : false }
-  : { ...config.db, ssl: false };
+  : { 
+      user: config.db.user,
+      host: config.db.host,
+      database: config.db.database,
+      password: config.db.password,
+      port: config.db.port,
+      ssl: false 
+    };
+
 
 export const pool = new Pool(poolConfig);
 

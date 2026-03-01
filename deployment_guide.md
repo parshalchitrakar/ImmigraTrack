@@ -43,8 +43,9 @@ This guide is tailored for your choice of **Neon.tech** (Database), **Vercel** (
    - **Framework Preset**: Angular.
    - **Root Directory**: `frontend`
    - **Build Command**: `npm run build`
-   - **Output Directory**: `dist/frontend` (Auto-detected).
-5. Click **Deploy**.
+   - **Output Directory**: `dist/frontend/browser` (Crucial for Angular 17+)
+5. **If you see a 404 error**: Go to your Vercel Project Settings > General > Build & Development Settings and ensure the **Output Directory** is set to `dist/frontend/browser`, then redeploy.
+6. Click **Deploy**.
 
 ---
 
