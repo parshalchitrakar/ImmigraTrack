@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply box-border;
+  }
+  body {
+    @apply antialiased;
+  }
+}
+
+@layer components {
+  .dashboard-card {
+    @apply bg-white dark:bg-cardDark rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-6 transition-all;
+  }
+  .btn-primary {
+    @apply px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50;
+  }
+  .badge-green {
+    @apply bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400;
+  }
+  .badge-red {
+    @apply bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400;
+  }
+}
+

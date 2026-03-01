@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: greencard-insights-api
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: greencard-db
+          property: connectionString
+
+databases:
+  - name: greencard-db
+    databaseName: immigratrack
+    user: immigratrack_user
