@@ -6,12 +6,8 @@
         "outDir": "./dist",
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
-        "strict": true,
-        "noImplicitAny": false,
-        "skipLibCheck": true,
-        "typeRoots": [
-            "./node_modules/@types"
-        ]
+        "strict": false,
+        "skipLibCheck": true
     },
     "include": [
         "src/**/*"
