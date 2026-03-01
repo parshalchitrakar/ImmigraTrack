@@ -31,7 +31,7 @@ export const recalculatePredictions = async () => {
 
     let totalMovement = 0;
     let retrogressions = 0;
-    records.forEach(r => {
+    records.forEach((r: any) => {
       totalMovement += (r.movement_days || 0);
       if (r.movement_days < 0) retrogressions++;
     });
@@ -46,7 +46,7 @@ export const recalculatePredictions = async () => {
       let cumulative = 0;
       // Reverse to go oldest to newest
       const reversed = [...records].reverse();
-      reversed.forEach((r, i) => {
+      reversed.forEach((r: any, i: number) => {
         cumulative += (r.movement_days || 0);
         sumX += i;
         sumY += cumulative;

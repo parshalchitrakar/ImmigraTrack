@@ -13,9 +13,9 @@ export const getAnalyticsMetrics = async (category: string, country: string) => 
   if (records.length === 0) return null;
 
   // Volatility Index: Standard deviation of movement
-  const movements = records.map(r => r.movement_days || 0);
-  const mean = movements.reduce((a, b) => a + b, 0) / movements.length;
-  const variance = movements.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / movements.length;
+  const movements = records.map((r: any) => r.movement_days || 0);
+  const mean = movements.reduce((a: number, b: number) => a + b, 0) / movements.length;
+  const variance = movements.reduce((a: number, b: number) => a + Math.pow(b - mean, 2), 0) / movements.length;
   const volatilityIndex = Math.sqrt(variance);
 
   // Longest Retrogression Streak
@@ -35,7 +35,7 @@ export const getAnalyticsMetrics = async (category: string, country: string) => 
   // Fastest Advancement Month
   let fastestAdvancement = 0;
   let fastestMonth = null;
-  records.forEach(r => {
+  records.forEach((r: any) => {
     if (r.movement_days > fastestAdvancement) {
       fastestAdvancement = r.movement_days;
       fastestMonth = r.bulletin_month;
@@ -64,7 +64,7 @@ export const recalculateAnalytics = async (category: string, country: string) =>
   if (history.length === 0) return;
 
   // Calculate moving average
-  const sum = history.reduce((acc, row) => acc + Number(row.movement_days), 0);
+  const sum = history.reduce((acc: number, row: any) => acc + Number(row.movement_days), 0);
   const avgMovement = sum / history.length;
 
   // Calculate simple regression slope
@@ -92,7 +92,7 @@ export const recalculateAnalytics = async (category: string, country: string) =>
   if (n >= 6) confidenceLevel = 'Medium';
   if (n >= 12) confidenceLevel = 'High';
 
-  let estimatedMonthsToCurrent = null;
+  let estimatedMonthsToCurrent: number | null = null;
   if (avgMovement > 0) {
       estimatedMonthsToCurrent = (365 / avgMovement);
   }
