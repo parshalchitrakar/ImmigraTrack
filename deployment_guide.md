@@ -1,39 +1,36 @@
-# Deployment Guide: ImmigraTrack
+# Deployment Guide: ImmigraTrack (Neon + Vercel + Render)
 
-This guide will help you deploy the full stack (Frontend, API, and Database) for free.
+This guide is tailored for your choice of **Neon.tech** (Database), **Vercel** (Frontend), and **Render** (API).
 
 ## Prerequisites
 1. A **GitHub** account.
-2. A **Render.com** account (for API and Database).
-3. A **Vercel.com** account (for Frontend).
+2. A **Neon.tech** account (Free serverless Postgres).
+3. A **Render.com** account (Free Node.js hosting).
+4. A **Vercel.com** account (Free Frontend hosting).
 
 ---
 
-## Step 1: Push Code to GitHub
-Ensure all your project code is in a single GitHub repository.
-1. Create a new repository on GitHub.
-2. Push your local code:
-   ```bash
-   git add .
-   git commit -m "Prepare for deployment"
-   git push origin main
-   ```
+## Step 1: Set up Neon Database
+1. Create a project at [Neon.tech](https://neon.tech/).
+2. Create a database named `immigratrack`.
+3. In the Neon Dashboard, go to **SQL Editor** and run the contents of `database/schema.sql` and `database/seed.sql`.
+4. Copy the **Connection String** (it starts with `postgres://...`).
 
 ---
 
-## Step 2: Deploy Database & API (Render)
-We will use Render's **Blueprints** to set up both the API and the Database simultaneously.
-
+## Step 2: Deploy API (Render)
 1. Go to [Render Dashboard](https://dashboard.render.com/).
-2. Click **New +** and select **Blueprint**.
+2. Click **New +** > **Web Service**.
 3. Connect your GitHub repository.
-4. Render will detect the `render.yaml` file.
-5. Click **Apply**.
-   - This will create a **PostgreSQL** database and a **Web Service** for the API.
-   - The API will automatically get a URL like `https://greencard-insights-api.onrender.com`.
-
-> [!NOTE]
-> Render's free PostgreSQL databases expire after **90 days**. For a "forever free" database, consider using **Neon.tech** and manually providing the `DATABASE_URL` in Render's environment variables.
+4. **Settings**:
+   - **Name**: `immigratrack-api`
+   - **Root Directory**: `backend`
+   - **Build Command**: `npm install && npm run build`
+   - **Start Command**: `npm start`
+5. **Environment Variables**:
+   - `DATABASE_URL`: (Paste your Neon connection string here)
+   - `NODE_ENV`: `production`
+6. Click **Create Web Service**.
 
 ---
 
@@ -43,33 +40,25 @@ We will use Render's **Blueprints** to set up both the API and the Database simu
 3. Import your GitHub repository.
 4. **Project Settings**:
    - **Framework Preset**: Angular.
-   - **Root Directory**: `frontend`.
-   - **Build Command**: `npm run build`.
-   - **Output Directory**: `dist/frontend` (This should be auto-detected).
-5. **Environment Variables**:
-   - None strictly required for build, as we've configured file replacements in `angular.json`.
-6. Click **Deploy**.
-
-Vercel will give you a domain like `https://greencard-insights-frontend.vercel.app`.
+   - **Root Directory**: `frontend`
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist/frontend` (Auto-detected).
+5. Click **Deploy**.
 
 ---
 
-## Step 4: Final Connection (CORS)
-To allow the frontend to talk to the API, you may need to update the `CORS` settings in the backend if you didn't use `*`.
-In `backend/src/app.ts`, ensure CORS allows your Vercel URL.
+## Step 4: Update Production URL
+Once Render gives you your API URL (e.g., `https://immigratrack-api.onrender.com`), update it in:
+- `frontend/src/environments/environment.prod.ts` 
+
+Then git push to trigger a fresh Vercel build.
 
 ---
 
-## Step 5: Custom Domain (Optional & Free-ish)
-- **Vercel**: Go to Settings > Domains to add a custom domain.
-- **Render**: Go to Settings > Custom Domains.
-- Both provide **Free SSL** automatically.
+## Summary of Production Stack
+| Component | Provider | Why? |
+|-----------|----------|------|
+| **Frontend** | Vercel | Fast, global CDN, great Angular support. |
+| **API**      | Render | Easy Node.js deployment, handles Cron jobs well. |
+| **Database** | Neon   | Serverless Postgres, generous free tier, won't expire. |
 
----
-
-## Summary of Production URLs
-| Component | Provider | URL |
-|-----------|----------|-----|
-| Frontend | Vercel | `your-app.vercel.app` |
-| API | Render | `your-api.onrender.com` |
-| Database | Render | Internal Connection |
