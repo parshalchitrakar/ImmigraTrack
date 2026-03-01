@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://greencard-insights-api.onrender.com/api'
+  apiUrl: 'https://immigratrack-api.onrender.com/api'
 };
